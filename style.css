@@ -224,6 +224,30 @@ body {
     margin-top: 0.5rem;
 }
 
+.notify-link {
+    display: block;
+    margin-top: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.notify-link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.badge-orange {
+    background: rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 1.5rem;
