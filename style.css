@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -136,7 +140,40 @@ body {
     opacity: 0.5;
 }
 
-.trust p {
+.trust h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+}
+
+.download-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.download-btn {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: rgba(139, 92, 246, 0.5);
+}
+
+.trust-note {
     font-size: 0.875rem;
     letter-spacing: 0.02em;
 }
