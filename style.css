@@ -224,6 +224,24 @@ body {
     margin-top: 0.5rem;
 }
 
+.footer-links {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: #8b5cf6;
+}
+
 .notify-link {
     display: block;
     margin-top: 0.75rem;
