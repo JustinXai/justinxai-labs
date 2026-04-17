@@ -266,6 +266,22 @@ body {
     color: #f97316;
 }
 
+.badge-purple {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+.comparison-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border-left: 3px solid #8b5cf6;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 1.5rem;
