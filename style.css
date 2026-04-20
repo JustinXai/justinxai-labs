@@ -282,6 +282,77 @@ body {
     border-left: 3px solid #8b5cf6;
 }
 
+.badge-live {
+    background: #8b5cf6;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.copy-command {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-command:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.copy-command code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: #22c55e;
+}
+
+.copy-icon {
+    font-size: 1rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.copy-command:hover .copy-icon {
+    opacity: 1;
+}
+
+.copy-command.copied {
+    border-color: #22c55e;
+}
+
+.copy-command.copied .copy-icon::after {
+    content: '✓';
+}
+
+.monetize-text {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.75rem;
+    line-height: 1.5;
+}
+
+.monetize-text a {
+    color: #8b5cf6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.monetize-text a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 1.5rem;
