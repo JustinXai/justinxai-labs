@@ -34,6 +34,29 @@ body {
     z-index: 100;
 }
 
+.promo-banner-launch {
+    background: linear-gradient(90deg, #7c3aed, #db2777, #7c3aed);
+    background-size: 200% 100%;
+    animation: banner-gradient 3s ease infinite;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.5rem;
+}
+
+.promo-banner-launch a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.promo-banner-launch a:hover {
+    text-decoration: underline;
+}
+
+@keyframes banner-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
 .container {
     max-width: 900px;
     width: 100%;
