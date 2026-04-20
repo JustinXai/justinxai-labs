@@ -397,6 +397,27 @@ body {
     content: '✓';
 }
 
+.feature-text {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.copy-command-highlight {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.copy-command-highlight:hover {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: #8b5cf6;
+}
+
+.copy-command-highlight code {
+    color: #c084fc;
+}
+
 .monetize-text {
     font-size: 0.8125rem;
     color: rgba(255, 255, 255, 0.5);
