@@ -184,23 +184,17 @@
                 ' * Originally 48 lines → dehydrated to ~12 essential lines',
                 ' */',
                 '',
-                '// ============================================',
                 '// LEGACY: Old import style (deprecated)',
-                '// ============================================',
                 'const _       =      require("lodash");',
                 'const axios   =       require("axios");',
                 'const config  =        require("../config");',
                 '',
-                '// ============================================',
                 '// DEBUG: Console spam from legacy version',
-                '// ============================================',
                 'console.log(">>> [getUserProfile] Starting...");',
                 'console.log(">>> [getUserProfile] Loading config from:", config.API_URL);',
                 'console.log(">>> [getUserProfile] Using method: REST");',
                 '',
-                '// ============================================',
                 '// LEGACY: Deep-nested try/catch with no action',
-                '// ============================================',
                 'async function fetchUserData(userId) {',
                 '    try {',
                 '        const url = `${config.API_URL}/users/${userId}`;',
@@ -213,9 +207,7 @@
                 '    }',
                 '}',
                 '',
-                '// ============================================',
                 '// LEGACY: Unused helper functions (dead code)',
-                '// ============================================',
                 'function validateEmail(email) {',
                 '    const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;',
                 '    return re.test(email);',
@@ -229,9 +221,7 @@
                 '    return new Date(date).toISOString().split("T")[0];',
                 '}',
                 '',
-                '// ============================================',
                 '// LEGACY: Over-engineered user transformer',
-                '// ============================================',
                 'function transformUserData(user) {',
                 '    const transformed = {};',
                 '    for (const key in user) {',
@@ -245,9 +235,7 @@
                 '    return transformed;',
                 '}',
                 '',
-                '// ============================================',
                 '// MAIN: The only real logic we need',
-                '// ============================================',
                 'async function getUserProfile(userId) {',
                 '    console.log(">>> [getUserProfile] Fetching user:", userId);',
                 '    const userData = await fetchUserData(userId);',
@@ -274,7 +262,6 @@
 
             var scoreAnimFrame = null;
 
-            // ── Dehydration Engine (fully inline, no API) ──────────────────
             function dehydrate(code) {
                 var BLOCK_COMMENT = /\/\*[\s\S]*?\*\//g;
                 var LINE_COMMENT  = /\/\/[^\n]*/g;
@@ -291,98 +278,146 @@
                     .replace(CONSOLE_LOG,  '')
                     .replace(EMPTY_LINE,   '')
                     .replace(TRAILING_WS,  '')
-                    .replace(LEADING_WS_LINES, function(match) {
-                        return match.slice(0, 2);
-                    });
+                    .replace(LEADING_WS_LINES, function(match) { return match.slice(0, 2); });
 
                 var lines = result.split('\n').filter(function(l) { return l.length > 0; });
                 var codeOnly = lines.join('\n');
 
                 var originalChars = code.replace(/\s+/g, '').length;
                 var dehydrChars   = codeOnly.replace(/\s+/g, '').length;
-
-                var saved = 0;
-                if (originalChars > 0) {
-                    saved = Math.round((1 - dehydrChars / originalChars) * 100);
-                }
+                var saved = originalChars > 0 ? Math.round((1 - dehydrChars / originalChars) * 100) : 0;
                 return { output: codeOnly, saved: saved };
             }
 
-            // ── Animate score counter ────────────────────────────────────
             function animateScore(target) {
                 if (scoreAnimFrame) cancelAnimationFrame(scoreAnimFrame);
                 var current = parseInt(scoreEl.textContent) || 0;
-                var start    = performance.now();
+                var start   = performance.now();
                 var duration = 600;
                 function step(now) {
                     var t = Math.min((now - start) / duration, 1);
                     var eased = 1 - Math.pow(1 - t, 3);
                     scoreEl.textContent = Math.round(current + (target - current) * eased);
-                    if (t < 1) {
-                        scoreAnimFrame = requestAnimationFrame(step);
-                    }
+                    if (t < 1) { scoreAnimFrame = requestAnimationFrame(step); }
                 }
                 requestAnimationFrame(step);
             }
 
-            // ── Process input ────────────────────────────────────────────
             function processInput() {
                 var code = inputEl.value;
                 var lines = code ? code.split('\n') : [];
-                var lineCount = lines.length;
-                var charCount = code.length;
-                inputLinesEl.textContent = lineCount;
-                inputCharsEl.textContent = charCount;
+                inputLinesEl.textContent = lines.length;
+                inputCharsEl.textContent  = code.length;
 
                 var result = dehydrate(code);
                 var outLines = result.output ? result.output.split('\n') : [];
-                var outChars = result.output ? result.output.length : 0;
                 outputLinesEl.textContent = outLines.length;
-                outputCharsEl.textContent  = outChars;
+                outputCharsEl.textContent  = result.output ? result.output.length : 0;
 
-                outputEl.textContent = result.output || '// Paste or type code on the left to see dehydrated output here...';
-
+                outputEl.textContent = result.output || '// Paste or type code on the left...';
                 animateScore(result.saved);
             }
 
-            // ── Debounce helper ───────────────────────────────────────────
             function debounce(fn, delay) {
                 var timer;
                 return function() {
-                    var ctx = this, args = arguments;
                     clearTimeout(timer);
-                    timer = setTimeout(function() { fn.apply(ctx, args); }, delay);
+                    timer = setTimeout(fn.bind(this, arguments), delay);
                 };
             }
 
-            var debouncedProcess = debounce(processInput, 120);
+            inputEl.addEventListener('input', debounce(processInput, 120));
 
-            inputEl.addEventListener('input', debouncedProcess);
-
-            // ── Reset button ──────────────────────────────────────────────
             btnReset.addEventListener('click', function() {
                 inputEl.value = BLOATED_SAMPLE;
                 processInput();
             });
 
-            // ── Copy button ───────────────────────────────────────────────
             btnCopy.addEventListener('click', function() {
-                var text = outputEl.textContent;
-                navigator.clipboard.writeText(text).then(function() {
-                    var orig = btnCopy.textContent;
+                var orig = btnCopy.textContent;
+                navigator.clipboard.writeText(outputEl.textContent).then(function() {
                     btnCopy.textContent = '✓ Copied!';
                     setTimeout(function() { btnCopy.textContent = orig; }, 1800);
                 });
             });
 
-            // ── Init with sample ──────────────────────────────────────────
             inputEl.value = BLOATED_SAMPLE;
             processInput();
+        })();
+
+        /* ── Last Sale Popup ───────────────────────────────── */
+        (function initSalePopup() {
+            var BUYERS = [
+                'Alex from San Francisco', 'Emma from London', 'Raj from Bangalore',
+                'Yuki from Tokyo', 'Lucas from Berlin', 'Chen Wei from Shanghai',
+                'Sarah from Toronto', 'Kai from Singapore', 'Maria from Madrid',
+                'Jin from Seoul', 'Alex from NYC', 'Priya from Mumbai',
+                'Leo from Paris', 'Nina from Amsterdam', 'Max from Sydney'
+            ];
+
+            var popup   = document.getElementById('sale-popup');
+            var buyerEl = document.getElementById('sale-popup-buyer');
+            var closeBtn = document.getElementById('sale-popup-close');
+
+            if (!popup || !buyerEl) return;
+
+            var isVisible = false;
+
+            function pickBuyer() {
+                return BUYERS[Math.floor(Math.random() * BUYERS.length)];
+            }
+
+            function showPopup() {
+                buyerEl.textContent = pickBuyer();
+                popup.classList.add('visible');
+                popup.setAttribute('aria-hidden', 'false');
+                isVisible = true;
+
+                clearTimeout(popup._hideTimer);
+                popup._hideTimer = setTimeout(hidePopup, 4000);
+            }
+
+            function hidePopup() {
+                popup.classList.remove('visible');
+                popup.setAttribute('aria-hidden', 'true');
+                isVisible = false;
+            }
+
+            closeBtn.addEventListener('click', hidePopup);
+
+            // Auto-dismiss on Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isVisible) hidePopup();
+            });
+
+            // Initial popup after 3 s, then every 20–35 s
+            setTimeout(showPopup, 3000);
+
+            (function scheduleNext() {
+                var delay = 20000 + Math.random() * 15000;
+                setTimeout(function() {
+                    showPopup();
+                    scheduleNext();
+                }, delay);
+            })();
         })();
     </script>
     <a href="https://www.producthunt.com/posts/tokencount-context-bundler" target="_blank" class="ph-badge" title="Vote for us on Product Hunt!">
         <span class="ph-badge-icon">▲</span>
         <span class="ph-badge-text">Vote</span>
     </a>
+
+    <!-- Last Sale Notification Popup -->
+    <div class="sale-popup" id="sale-popup" aria-hidden="true">
+        <div class="sale-popup-inner">
+            <button class="sale-popup-close" id="sale-popup-close" aria-label="Close">&times;</button>
+            <div class="sale-popup-icon">🎉</div>
+            <div class="sale-popup-label">Someone just bought</div>
+            <div class="sale-popup-product">JustinXai Labs Pro Pass</div>
+            <div class="sale-popup-buyer" id="sale-popup-buyer"></div>
+            <div class="sale-popup-time">Just now</div>
+            <div class="sale-popup-dot"></div>
+        </div>
+    </div>
 </body>
 </html>

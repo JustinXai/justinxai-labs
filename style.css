@@ -865,6 +865,113 @@ body {
     50% { transform: translateY(-3px); }
 }
 
+/* ── Last Sale Popup ──────────────────────────────────── */
+.sale-popup {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 1.5rem;
+    z-index: 200;
+    opacity: 0;
+    transform: translateX(calc(100% + 2rem));
+    transition: opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+.sale-popup.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.sale-popup-inner {
+    position: relative;
+    background: #111827;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+    min-width: 270px;
+    max-width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05) inset;
+    font-family: inherit;
+    text-align: left;
+}
+
+.sale-popup-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.35);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s ease;
+}
+.sale-popup-close:hover { color: rgba(255,255,255,0.8); }
+
+.sale-popup-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.sale-popup-label {
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.sale-popup-product {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+}
+
+.sale-popup-buyer {
+    font-size: 0.8125rem;
+    color: #a78bfa;
+    font-weight: 600;
+}
+
+.sale-popup-time {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 0.2rem 0.6rem;
+}
+
+.sale-popup-dot {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: dot-blink 1.4s ease-in-out infinite;
+}
+
+@media (max-width: 600px) {
+    .sale-popup {
+        bottom: 5rem;
+        right: 1rem;
+        left: 1rem;
+    }
+    .sale-popup-inner {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
 @media (max-width: 600px) {
     body {
         padding: 1.5rem;
