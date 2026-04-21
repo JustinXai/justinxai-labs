@@ -70,7 +70,223 @@ body {
 }
 
 .hero {
+    margin-bottom: 3rem;
+}
+
+/* ── Sandbox ──────────────────────────────────────────── */
+.sandbox {
     margin-bottom: 5rem;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+}
+
+.sandbox-header {
+    margin-bottom: 1.75rem;
+}
+
+.sandbox-title {
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+}
+
+.sandbox-subtitle {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.4);
+}
+
+.sandbox-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #0d1f12 0%, #0a2a1a 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(34,197,94,0.25);
+}
+
+.score-number {
+    display: flex;
+    align-items: baseline;
+    gap: 0.1rem;
+    line-height: 1;
+}
+
+.score-value {
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: #22c55e;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    text-shadow: 0 0 40px rgba(34,197,94,0.4);
+    transition: color 0.3s ease;
+}
+
+.score-percent {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #22c55e;
+    opacity: 0.8;
+}
+
+.score-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(34,197,94,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.25rem;
+}
+
+.sandbox-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.sandbox-pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+}
+
+.pane-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.pane-tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.pane-tag-bloated {
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.3);
+}
+
+.pane-tag-dehydrated {
+    background: rgba(34,197,94,0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.25);
+}
+
+.pane-reset,
+.pane-copy {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    border-radius: 5px;
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pane-reset:hover,
+.pane-copy:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+.sandbox-input {
+    flex: 1;
+    background: #0f0f0f;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    color: #d1d5db;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    width: 100%;
+    min-height: 340px;
+    transition: border-color 0.2s ease;
+}
+
+.sandbox-input:focus {
+    border-color: rgba(239,68,68,0.5);
+}
+
+.sandbox-output {
+    flex: 1;
+    background: #090f09;
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    color: #4ade80;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    overflow: auto;
+    white-space: pre;
+    margin: 0;
+    min-height: 340px;
+}
+
+.sandbox-output code {
+    display: block;
+}
+
+.pane-meta {
+    margin-top: 0.5rem;
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.25);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.sandbox-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.25rem;
+}
+
+.sandbox-arrow {
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.15);
+}
+
+.sandbox-footnote {
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+}
+
+@media (max-width: 700px) {
+    .sandbox-layout {
+        grid-template-columns: 1fr;
+    }
+    .sandbox-divider {
+        transform: rotate(90deg);
+        padding: 0.5rem 0;
+    }
+    .sandbox-arrow {
+        font-size: 1.25rem;
+    }
+    .score-value {
+        font-size: 3.5rem;
+    }
+    .score-percent {
+        font-size: 2rem;
+    }
 }
 
 .countdown-wrapper {

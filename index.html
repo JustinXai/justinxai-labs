@@ -28,6 +28,45 @@
             <h1>Master your AI Context.<br>Save Tokens. Build Faster.</h1>
         </section>
 
+        <section class="sandbox" id="sandbox">
+            <div class="sandbox-header">
+                <h2 class="sandbox-title">⚡ See It In Action — No Download Required</h2>
+                <p class="sandbox-subtitle">Paste any bloated code on the left. Watch the magic on the right.</p>
+            </div>
+            <div class="sandbox-score">
+                <div class="score-number">
+                    <span class="score-value" id="score-value">0</span><span class="score-percent">%</span>
+                </div>
+                <div class="score-label">Tokens Saved</div>
+            </div>
+            <div class="sandbox-layout">
+                <div class="sandbox-pane">
+                    <div class="pane-label">
+                        <span class="pane-tag pane-tag-bloated">BLOATED INPUT</span>
+                        <button class="pane-reset" id="btn-reset" title="Reset to default">↺ Reset</button>
+                    </div>
+                    <textarea class="sandbox-input" id="sandbox-input" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+                    <div class="pane-meta">
+                        <span id="input-lines">0</span> lines &nbsp;·&nbsp; <span id="input-chars">0</span> chars
+                    </div>
+                </div>
+                <div class="sandbox-divider">
+                    <span class="sandbox-arrow">→</span>
+                </div>
+                <div class="sandbox-pane">
+                    <div class="pane-label">
+                        <span class="pane-tag pane-tag-dehydrated">DEHYDRATED OUTPUT</span>
+                        <button class="pane-copy" id="btn-copy" title="Copy output">📋 Copy</button>
+                    </div>
+                    <pre class="sandbox-output" id="sandbox-output"><code></code></pre>
+                    <div class="pane-meta">
+                        <span id="output-lines">0</span> lines &nbsp;·&nbsp; <span id="output-chars">0</span> chars
+                    </div>
+                </div>
+            </div>
+            <p class="sandbox-footnote">🏃 Runs 100% locally in your browser — zero data sent anywhere.</p>
+        </section>
+
         <section class="products">
             <div class="product-card">
                 <div class="product-icon">📦</div>
@@ -136,6 +175,209 @@
                     }
                 }
             }, 90000);
+        })();
+
+        (function initSandbox() {
+            var BLOATED_SAMPLE = [
+                '/**',
+                ' * getUserProfile.js — A bloated profile fetcher',
+                ' * Originally 48 lines → dehydrated to ~12 essential lines',
+                ' */',
+                '',
+                '// ============================================',
+                '// LEGACY: Old import style (deprecated)',
+                '// ============================================',
+                'const _       =      require("lodash");',
+                'const axios   =       require("axios");',
+                'const config  =        require("../config");',
+                '',
+                '// ============================================',
+                '// DEBUG: Console spam from legacy version',
+                '// ============================================',
+                'console.log(">>> [getUserProfile] Starting...");',
+                'console.log(">>> [getUserProfile] Loading config from:", config.API_URL);',
+                'console.log(">>> [getUserProfile] Using method: REST");',
+                '',
+                '// ============================================',
+                '// LEGACY: Deep-nested try/catch with no action',
+                '// ============================================',
+                'async function fetchUserData(userId) {',
+                '    try {',
+                '        const url = `${config.API_URL}/users/${userId}`;',
+                '        const response = await axios.get(url);',
+                '        const userData = response.data;',
+                '        return userData;',
+                '    } catch (error) {',
+                '        console.error(">>> [ERROR] fetchUserData failed:", error);',
+                '        return null;',
+                '    }',
+                '}',
+                '',
+                '// ============================================',
+                '// LEGACY: Unused helper functions (dead code)',
+                '// ============================================',
+                'function validateEmail(email) {',
+                '    const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;',
+                '    return re.test(email);',
+                '}',
+                '',
+                'function capitalize(str) {',
+                '    return str.charAt(0).toUpperCase() + str.slice(1);',
+                '}',
+                '',
+                'function formatDate(date) {',
+                '    return new Date(date).toISOString().split("T")[0];',
+                '}',
+                '',
+                '// ============================================',
+                '// LEGACY: Over-engineered user transformer',
+                '// ============================================',
+                'function transformUserData(user) {',
+                '    const transformed = {};',
+                '    for (const key in user) {',
+                '        if (user.hasOwnProperty(key)) {',
+                '            transformed[key] = user[key];',
+                '        }',
+                '    }',
+                '    transformed.fullName = capitalize(user.firstName) + " " + capitalize(user.lastName);',
+                '    transformed.emailValid = validateEmail(user.email);',
+                '    transformed.createdAt = formatDate(user.createdAt);',
+                '    return transformed;',
+                '}',
+                '',
+                '// ============================================',
+                '// MAIN: The only real logic we need',
+                '// ============================================',
+                'async function getUserProfile(userId) {',
+                '    console.log(">>> [getUserProfile] Fetching user:", userId);',
+                '    const userData = await fetchUserData(userId);',
+                '    if (!userData) {',
+                '        throw new Error("User not found");',
+                '    }',
+                '    const profile = transformUserData(userData);',
+                '    console.log(">>> [getUserProfile] Done. Returning profile.");',
+                '    return profile;',
+                '}',
+                '',
+                'module.exports = { getUserProfile };'
+            ].join('\n');
+
+            var inputEl  = document.getElementById('sandbox-input');
+            var outputEl = document.getElementById('sandbox-output').querySelector('code');
+            var scoreEl  = document.getElementById('score-value');
+            var inputLinesEl  = document.getElementById('input-lines');
+            var inputCharsEl  = document.getElementById('input-chars');
+            var outputLinesEl = document.getElementById('output-lines');
+            var outputCharsEl = document.getElementById('output-chars');
+            var btnReset = document.getElementById('btn-reset');
+            var btnCopy  = document.getElementById('btn-copy');
+
+            var scoreAnimFrame = null;
+
+            // ── Dehydration Engine (fully inline, no API) ──────────────────
+            function dehydrate(code) {
+                var BLOCK_COMMENT = /\/\*[\s\S]*?\*\//g;
+                var LINE_COMMENT  = /\/\/[^\n]*/g;
+                var IMPORT_STMT    = /^(?:const|let|var|import|require)\s+.*(?:from\s+['"][^'"]+['"]|require\s*\(['"][^'"]+['"]\))\s*;?\s*$/gm;
+                var CONSOLE_LOG   = /^console\.(log|error|warn|debug|info)\s*\([^)]*\)\s*;?\s*$/gm;
+                var EMPTY_LINE    = /^[ \t]*$/gm;
+                var TRAILING_WS   = /[ \t]+$/gm;
+                var LEADING_WS_LINES = /^[ \t]+/gm;
+
+                var result = code
+                    .replace(BLOCK_COMMENT, '')
+                    .replace(LINE_COMMENT,  '')
+                    .replace(IMPORT_STMT,   '')
+                    .replace(CONSOLE_LOG,  '')
+                    .replace(EMPTY_LINE,   '')
+                    .replace(TRAILING_WS,  '')
+                    .replace(LEADING_WS_LINES, function(match) {
+                        return match.slice(0, 2);
+                    });
+
+                var lines = result.split('\n').filter(function(l) { return l.length > 0; });
+                var codeOnly = lines.join('\n');
+
+                var originalChars = code.replace(/\s+/g, '').length;
+                var dehydrChars   = codeOnly.replace(/\s+/g, '').length;
+
+                var saved = 0;
+                if (originalChars > 0) {
+                    saved = Math.round((1 - dehydrChars / originalChars) * 100);
+                }
+                return { output: codeOnly, saved: saved };
+            }
+
+            // ── Animate score counter ────────────────────────────────────
+            function animateScore(target) {
+                if (scoreAnimFrame) cancelAnimationFrame(scoreAnimFrame);
+                var current = parseInt(scoreEl.textContent) || 0;
+                var start    = performance.now();
+                var duration = 600;
+                function step(now) {
+                    var t = Math.min((now - start) / duration, 1);
+                    var eased = 1 - Math.pow(1 - t, 3);
+                    scoreEl.textContent = Math.round(current + (target - current) * eased);
+                    if (t < 1) {
+                        scoreAnimFrame = requestAnimationFrame(step);
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+
+            // ── Process input ────────────────────────────────────────────
+            function processInput() {
+                var code = inputEl.value;
+                var lines = code ? code.split('\n') : [];
+                var lineCount = lines.length;
+                var charCount = code.length;
+                inputLinesEl.textContent = lineCount;
+                inputCharsEl.textContent = charCount;
+
+                var result = dehydrate(code);
+                var outLines = result.output ? result.output.split('\n') : [];
+                var outChars = result.output ? result.output.length : 0;
+                outputLinesEl.textContent = outLines.length;
+                outputCharsEl.textContent  = outChars;
+
+                outputEl.textContent = result.output || '// Paste or type code on the left to see dehydrated output here...';
+
+                animateScore(result.saved);
+            }
+
+            // ── Debounce helper ───────────────────────────────────────────
+            function debounce(fn, delay) {
+                var timer;
+                return function() {
+                    var ctx = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function() { fn.apply(ctx, args); }, delay);
+                };
+            }
+
+            var debouncedProcess = debounce(processInput, 120);
+
+            inputEl.addEventListener('input', debouncedProcess);
+
+            // ── Reset button ──────────────────────────────────────────────
+            btnReset.addEventListener('click', function() {
+                inputEl.value = BLOATED_SAMPLE;
+                processInput();
+            });
+
+            // ── Copy button ───────────────────────────────────────────────
+            btnCopy.addEventListener('click', function() {
+                var text = outputEl.textContent;
+                navigator.clipboard.writeText(text).then(function() {
+                    var orig = btnCopy.textContent;
+                    btnCopy.textContent = '✓ Copied!';
+                    setTimeout(function() { btnCopy.textContent = orig; }, 1800);
+                });
+            });
+
+            // ── Init with sample ──────────────────────────────────────────
+            inputEl.value = BLOATED_SAMPLE;
+            processInput();
         })();
     </script>
     <a href="https://www.producthunt.com/posts/tokencount-context-bundler" target="_blank" class="ph-badge" title="Vote for us on Product Hunt!">
