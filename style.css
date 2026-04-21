@@ -206,6 +206,19 @@ body {
     font-weight: 500;
 }
 
+.cta-scarcity {
+    color: #ef4444;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+}
+
+.cta-value {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8125rem;
+    margin-top: 0.375rem;
+}
+
 .btn-support {
     display: inline-block;
     background: #22c55e;
