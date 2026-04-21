@@ -19,42 +19,37 @@ body {
     padding: 2rem;
 }
 
-.promo-banner {
+.ph-live-banner {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background: #8b5cf6;
-    color: #fff;
-    text-align: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.375rem;
-    letter-spacing: 0.02em;
+    overflow: hidden;
+    white-space: nowrap;
     z-index: 100;
+    padding: 0;
 }
 
-.promo-banner-launch {
-    background: linear-gradient(90deg, #7c3aed, #db2777, #7c3aed);
-    background-size: 200% 100%;
-    animation: banner-gradient 3s ease infinite;
+.marquee-wrapper {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 20s linear infinite;
+}
+
+.marquee-content {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    color: #fff;
     font-size: 0.8125rem;
     font-weight: 700;
-    padding: 0.5rem;
+    letter-spacing: 0.02em;
+    will-change: transform;
 }
 
-.promo-banner-launch a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.promo-banner-launch a:hover {
-    text-decoration: underline;
-}
-
-@keyframes banner-gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+@keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 .container {
@@ -213,34 +208,37 @@ body {
 
 .btn-support {
     display: inline-block;
-    background: #8b5cf6;
+    background: #22c55e;
     color: #fff;
     text-decoration: none;
     font-size: 1.125rem;
-    font-weight: 600;
+    font-weight: 700;
     padding: 1rem 2.5rem;
     border-radius: 8px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: -0.01em;
 }
 
 .btn-urgent {
-    background: linear-gradient(135deg, #7c3aed, #db2777);
+    background: #22c55e;
     animation: urgent-pulse 1.5s ease-in-out infinite;
 }
 
 .btn-urgent:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 40px rgba(236, 72, 153, 0.5);
+    box-shadow: 0 8px 40px rgba(34, 197, 94, 0.5);
+    background: #16a34a;
 }
 
 @keyframes urgent-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.5); }
-    50% { box-shadow: 0 0 0 12px rgba(236, 72, 153, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    50% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
 }
 
 .btn-support:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+    background: #16a34a;
 }
 
 .trust {
@@ -378,10 +376,10 @@ body {
 }
 
 .ph-link {
-    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    background: #22c55e;
     border-color: transparent;
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
     animation: ph-pulse 2s ease-in-out infinite;
 }
 
@@ -394,15 +392,15 @@ body {
 }
 
 .ph-link:hover {
-    background: linear-gradient(135deg, #7c3aed, #db2777);
+    background: #16a34a;
     border-color: transparent;
     color: #fff;
     opacity: 1;
 }
 
 @keyframes ph-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
-    50% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
 }
 
 .footer-links {
@@ -553,6 +551,47 @@ body {
 
 .monetize-text a:hover {
     text-decoration: underline;
+}
+
+.ph-badge {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: #ff6000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.5rem 0.875rem;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(255, 96, 0, 0.4);
+    z-index: 100;
+    animation: badge-bounce 2s ease-in-out infinite;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ph-badge:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(255, 96, 0, 0.55);
+    text-decoration: none;
+}
+
+.ph-badge-icon {
+    font-size: 0.875rem;
+    line-height: 1;
+}
+
+.ph-badge-text {
+    line-height: 1;
+}
+
+@keyframes badge-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
 }
 
 @media (max-width: 600px) {
