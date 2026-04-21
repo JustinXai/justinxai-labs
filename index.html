@@ -38,8 +38,8 @@
         <section class="products">
             <div class="product-card">
                 <div class="product-icon">📦</div>
-                <h2>ContextBundler (CLI)</h2>
-                <p>Turn entire repos into 90% dehydrated AI context.</p>
+                <h2>ContextBundler (CLI & Web3)</h2>
+                <p>Turn entire repos into 90% dehydrated AI context. <strong>World's first ABI-to-MCP compiler included.</strong></p>
                 <div class="comparison-text">repomix (1.2M Tokens) → ContextBundler (150K Tokens)</div>
                 <span class="badge badge-live">v1.2.0 - MDC Rules Ready</span>
                 <p class="feature-text">Automatically generate .mdc rules for your project using aicb rules command.</p>
@@ -121,6 +121,9 @@
             });
         }
         (function initCountdown() {
+            // Pre-launch: same product page URL; Product Hunt auto-shows "Upcoming / Get notified" state.
+            // Post-launch: same URL; Product Hunt auto-shows upvote + comments.
+            // No separate URL needed — the page transitions automatically.
             function updateCountdown() {
                 const target = new Date('2026-04-21T15:01:00+08:00').getTime();
                 const now = Date.now();
