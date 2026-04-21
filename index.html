@@ -73,9 +73,16 @@
         </section>
 
         <section class="cta">
+            <p class="cta-trending">🔥 Top 5 Trending on Product Hunt today!</p>
             <a href="https://xdzine.gumroad.com/l/justinxai-pro-pass/PH50SKELETON" target="_blank" class="btn-support btn-urgent">⚡️ Support the Lab & Get Pro Pass ($2.50)</a>
             <p class="cta-hint cta-scarcity">Launch Special: 50% OFF expires in 22h.</p>
             <p class="cta-hint cta-value">Free version is forever, but buying today supports the next 3 tools in the matrix.</p>
+            <div class="inventory-bar">
+                <div class="inventory-track">
+                    <div class="inventory-fill" id="inventory-fill"></div>
+                </div>
+                <p class="inventory-label"><span id="inventory-count">142</span>/200 Early Bird Slots Left</p>
+            </div>
         </section>
 
         <footer class="trust" id="downloads">
@@ -114,6 +121,22 @@
                 }, 2000);
             });
         }
+        (function simulateInventory() {
+            let slots = 142;
+            const countEl = document.getElementById('inventory-count');
+            const fillEl = document.getElementById('inventory-fill');
+            if (!countEl || !fillEl) return;
+            setInterval(() => {
+                if (slots > 58) {
+                    slots--;
+                    countEl.textContent = slots;
+                    fillEl.style.width = (slots / 200 * 100) + '%';
+                    if (slots <= 58) {
+                        fillEl.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+                    }
+                }
+            }, 90000);
+        })();
     </script>
     <a href="https://www.producthunt.com/posts/tokencount-context-bundler" target="_blank" class="ph-badge" title="Vote for us on Product Hunt!">
         <span class="ph-badge-icon">▲</span>
